@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-green: #1b4d3e;
+            --primary-dark: #1b4d3e;
             --secondary-green: #2e7d32;
             --accent-gold: #f4c430;
-            --dark-text: #333333;
-            --light-bg: #f9fbf9;
+            --text-dark: #222222;
+            --bg-light: #f4f6f4;
             --white: #ffffff;
+            --alert-red: #b30000;
         }
 
         * {
@@ -24,107 +25,212 @@
         }
 
         body {
-            color: var(--dark-text);
-            background-color: var(--light-bg);
+            color: var(--text-dark);
+            background-color: var(--bg-light);
             line-height: 1.6;
         }
 
-        /* Header & Navigation */
-        header {
+        /* Top Bar */
+        .top-bar {
             background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 0;
         }
 
-        .navbar {
+        .top-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 0 20px;
         }
 
-        .logo-container {
+        .logo-area {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .logo-container img {
-            height: 55px;
-            width: 55px;
+        .logo-area img {
+            height: 60px;
+            width: 60px;
             object-fit: cover;
             border-radius: 50%;
-            border: 2px solid var(--primary-green);
+            border: 2px solid var(--primary-dark);
         }
 
-        .logo-text {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--primary-green);
+        .logo-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
             line-height: 1.2;
         }
 
-        .nav-links {
+        .logo-title span {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .top-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 18px;
+        }
+
+        .social-icons a {
+            color: #555;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-dark);
+        }
+
+        .admin-login-btn {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            background-color: var(--secondary-green);
+        }
+
+        /* Menú de Navegación */
+        .main-nav {
+            background-color: #1a1a1a;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             list-style: none;
-            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .nav-links a {
+        .nav-container li {
+            position: relative;
+        }
+
+        .nav-container li a {
+            display: block;
+            color: var(--white);
+            padding: 16px 15px;
             text-decoration: none;
-            color: var(--dark-text);
             font-weight: 600;
-            transition: color 0.3s;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s, color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--secondary-green);
+        .nav-container li a:hover, .nav-container li a.active {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
         }
 
-        /* Hero Section */
-        .hero {
+        /* Submenú Desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #1a1a1a;
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            list-style: none;
+            z-index: 1100;
+        }
+
+        .dropdown-menu li a {
+            padding: 12px 16px;
+            font-size: 0.8rem;
+            text-transform: none;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: left;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+        }
+
+        .nav-container li:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Banner Principal */
+        .hero-banner {
+            position: relative;
             background: linear-gradient(rgba(27, 77, 62, 0.85), rgba(46, 125, 50, 0.85)), url('https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
             color: var(--white);
             text-align: center;
             padding: 100px 20px;
+            border-bottom: 5px solid var(--accent-gold);
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        .hero-banner h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+            letter-spacing: 2px;
         }
 
-        .hero p {
+        .hero-banner h2 {
+            font-size: 2.2rem;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .hero-banner p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 30px;
         }
 
-        .btn {
+        .hero-btn {
             display: inline-block;
             background-color: var(--accent-gold);
-            color: var(--dark-text);
-            padding: 12px 30px;
+            color: var(--text-dark);
+            padding: 14px 35px;
             border-radius: 30px;
-            text-decoration: none;
             font-weight: bold;
-            transition: transform 0.3s, background-color 0.3s;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: transform 0.3s, background 0.3s;
         }
 
-        .btn:hover {
+        .hero-btn:hover {
             background-color: #d4a726;
             transform: translateY(-2px);
         }
 
-        /* Sections */
+        /* Secciones Generales */
         section {
             max-width: 1100px;
             margin: 50px auto;
@@ -133,8 +239,8 @@
 
         .section-title {
             text-align: center;
-            color: var(--primary-green);
-            font-size: 2rem;
+            color: var(--primary-dark);
+            font-size: 2.2rem;
             margin-bottom: 40px;
             position: relative;
         }
@@ -142,7 +248,7 @@
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 70px;
             height: 4px;
             background-color: var(--accent-gold);
             margin: 10px auto 0;
@@ -158,105 +264,181 @@
 
         .card {
             background: var(--white);
-            padding: 30px;
+            padding: 35px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .card h3 {
-            color: var(--primary-green);
+            color: var(--primary-dark);
             margin-bottom: 15px;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
         }
 
-        /* --- ESTILOS DEL CATÁLOGO DE NOTICIAS --- */
-        .news-grid {
+        /* --- CONTENEDOR DE ARTÍCULOS DINÁMICOS --- */
+        .dynamic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
-        .news-card {
+        .dynamic-card {
             background: var(--white);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s;
         }
 
-        .news-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .news-img-container {
+        .dynamic-card img {
             width: 100%;
-            height: 220px;
-            background-color: #e0e0e0;
-            overflow: hidden;
-        }
-
-        .news-img-container img {
-            width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
         }
 
-        .news-content {
+        .dynamic-card-content {
             padding: 20px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
-        .news-date {
-            font-size: 0.85rem;
-            color: #777;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .news-title {
-            color: var(--primary-green);
-            font-size: 1.25rem;
+        .dynamic-card h4 {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
             margin-bottom: 10px;
         }
 
-        .news-desc {
+        .dynamic-card p {
             color: #555;
             font-size: 0.95rem;
             margin-bottom: 15px;
             flex-grow: 1;
         }
 
+        .empty-section-msg {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            grid-column: 1 / -1;
+            padding: 20px;
+        }
+
+        /* --- SECCIÓN DE EMPRESAS MIEMBROS (CARRUSEL) --- */
+        .members-section {
+            background-color: var(--white);
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 50px auto;
+            max-width: 1100px;
+        }
+
+        .members-carousel-wrapper {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .carousel-btn {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            z-index: 10;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--secondary-green);
+        }
+
+        .members-container {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 10px;
+            width: 100%;
+            scrollbar-width: none;
+        }
+
+        .members-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .member-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 220px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            flex-shrink: 0;
+        }
+
+        .member-logo-box {
+            width: 120px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .member-logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .member-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
         .delete-btn {
             background-color: #d9534f;
             color: white;
             border: none;
-            padding: 6px 12px;
+            padding: 5px 12px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 0.85rem;
-            align-self: flex-start;
+            font-size: 0.8rem;
             transition: background 0.3s;
+            display: none;
         }
 
-        .delete-btn:hover {
-            background-color: #c9302c;
+        body.admin-logged-in .delete-btn {
+            display: inline-block;
         }
 
-        /* --- PANEL PARA SUBIR NOTICIAS --- */
-        .admin-panel {
+        /* --- PANEL DE ADMINISTRACIÓN GLOBAL --- */
+        #admin-panel-container {
+            display: none;
             background: var(--white);
-            padding: 35px;
+            padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             max-width: 700px;
-            margin: 0 auto;
+            margin: 50px auto;
         }
 
         .form-group {
@@ -267,7 +449,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--primary-green);
+            color: var(--primary-dark);
         }
 
         .form-control {
@@ -280,100 +462,146 @@
 
         textarea.form-control {
             resize: vertical;
-            height: 120px;
+            height: 100px;
         }
 
-        /* Social / Contact Section */
-        .social-section {
-            background-color: var(--white);
-            text-align: center;
-            padding: 60px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-top: 50px;
-        }
-
-        .instagram-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #df5850 45%, #d6249f 60%, #285AEB 90%);
-            color: var(--white);
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.2rem;
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 14px;
+            border-radius: 30px;
             font-weight: bold;
-            margin-top: 20px;
-            transition: opacity 0.3s, transform 0.3s;
+            font-size: 1.05rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
         }
 
-        .instagram-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
+        .btn-submit:hover {
+            background-color: #d4a726;
+            transform: translateY(-2px);
         }
 
         /* Footer */
         footer {
-            background-color: var(--primary-green);
+            background-color: #1a1a1a;
             color: var(--white);
             text-align: center;
             padding: 30px 20px;
-            margin-top: 80px;
+            margin-top: 50px;
         }
 
         footer p {
             font-size: 0.9rem;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .navbar {
+            .top-container {
                 flex-direction: column;
                 gap: 15px;
+                text-align: center;
             }
 
-            .nav-links {
-                gap: 15px;
-                font-size: 0.9rem;
+            .top-right-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero-banner h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-banner h2 {
+                font-size: 1.5rem;
             }
 
             .grid-2 {
                 grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER / NAVEGACIÓN -->
+    <!-- TOP BAR -->
     <header>
-        <div class="navbar">
-            <div class="logo-container">
-                <img src="logo.jpg" alt="Logo ANAVIP RD">
-                <div class="logo-text">ANAVIP RD <br><span style="font-size: 0.75rem; font-weight: normal;">República Dominicana</span></div>
+        <div class="top-bar">
+            <div class="top-container">
+                <div class="logo-area">
+                    <img src="logo.jpg" alt="Logo ANAVIP RD">
+                    <div class="logo-title">
+                        ANAVIP RD
+                        <br><span>Asociación Nacional de Pequeños y Medianos Productores Avícolas</span>
+                    </div>
+                </div>
+                <div class="top-right-actions">
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/anaviprd" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <button class="admin-login-btn" id="adminLoginBtn"><i class="fas fa-lock"></i> Acceso Administrador</button>
+                </div>
             </div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#quienes-somos">Quiénes Somos</a></li>
-                <li><a href="#sector">Sector Avícola</a></li>
-                <li><a href="#noticias">Catálogo y Noticias</a></li>
-                <li><a href="#subir-noticia">Publicar</a></li>
+        </div>
+
+        <!-- MENÚ DE NAVEGACIÓN -->
+        <nav class="main-nav">
+            <ul class="nav-container">
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                
+                <li>
+                    <a href="#quienes-somos">Quiénes Somos <i class="fas fa-chevron-down" style="font-size: 0.65rem;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#quienes-somos">Acerca de Anavip</a></li>
+                        <li><a href="#quienes-somos">Empresas Miembros</a></li>
+                        <li><a href="#quienes-somos">Junta Directiva</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#sector-avicola-section">Sector Avícola <i class="fas fa-chevron-down" style="font-size: 0.65rem;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#sector-avicola-section">Avicultura en RD</a></li>
+                        <li><a href="#sector-avicola-section">Resoluciones y Leyes</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pollo-huevo-section">Pollo y Huevo <i class="fas fa-chevron-down" style="font-size: 0.65rem;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#pollo-huevo-section">Pollo Fresco</a></li>
+                        <li><a href="#pollo-huevo-section">Huevo de Granja</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#actividades-section">Actividades <i class="fas fa-chevron-down" style="font-size: 0.65rem;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#actividades-section">Noticias y Comunicados</a></li>
+                        <li><a href="#actividades-section">Biblioteca y Videos</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#congreso-section">Congreso</a></li>
+                <li><a href="#indicadores-section">Indicadores Económicos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
-        </div>
+        </nav>
     </header>
 
-    <!-- HERO SECTION -->
-    <section id="inicio" class="hero" style="margin:0; max-width:none;">
-        <h1>Unidos por el Desarrollo Sostenible de la Avicultura Dominicana</h1>
+    <!-- BANNER PRINCIPAL -->
+    <section id="inicio" class="hero-banner" style="margin: 0; max-width: none;">
+        <h1>¡Pollo Fresco</h1>
+        <h2>100% dominicano!</h2>
         <p>Asociación Nacional de Pequeños y Medianos Productores Avícolas, Dominicana. Unidos por el desarrollo sostenible de la avicultura dominicana.</p>
-        <a href="#quienes-somos" class="btn">Conoce Más</a>
+        <a href="#pollo-huevo-section" class="hero-btn">Ver Productos</a>
     </section>
 
     <!-- QUIÉNES SOMOS -->
@@ -392,196 +620,291 @@
     </section>
 
     <!-- SECTOR AVÍCOLA -->
-    <section id="sector">
+    <section id="sector-avicola-section">
         <h2 class="section-title">Sector Avícola</h2>
-        <div class="card" style="text-align: center; max-width: 800px; margin: 0 auto;">
+        <div class="card" style="max-width: 900px; margin: 0 auto; margin-bottom: 25px;">
             <h3>Impulsando el Progreso Nacional</h3>
-            <p>La avicultura representa uno de los pilares fundamentales de la alimentación y la economía dominicana. Desde ANAVIP RD impulsamos iniciativas técnicas, normativas y de capacitación constante para garantizar la máxima calidad en la producción de pollo y huevo fresco para las familias dominicanas.</p>
+            <p>La avicultura representa uno de los pilares fundamentales de la alimentación y la economía dominicana. Desde ANAVIP RD impulsamos iniciativas técnicas, normativas y de capacitación constante.</p>
         </div>
+        <div id="sector-avicola-grid" class="dynamic-grid"></div>
     </section>
 
-    <!-- CATÁLOGO DE NOTICIAS / PRODUCTOS -->
-    <section id="noticias">
-        <h2 class="section-title">Catálogo de Noticias y Productos</h2>
-        <div id="newsContainer" class="news-grid">
-            <!-- Las noticias y las imágenes oficiales se cargarán aquí -->
+    <!-- POLLO Y HUEVO -->
+    <section id="pollo-huevo-section">
+        <h2 class="section-title">Pollo y Huevo</h2>
+        <div class="card" style="max-width: 900px; margin: 0 auto; margin-bottom: 25px;">
+            <h3>Calidad y Frescura Garantizada</h3>
+            <p>Conoce nuestros productos avícolas principales criados bajo los más altos estándares de calidad y sanidad nacional.</p>
         </div>
+        <div id="pollo-huevo-grid" class="dynamic-grid"></div>
     </section>
 
-    <!-- PANEL PARA SUBIR NOTICIAS -->
-    <section id="subir-noticia">
-        <h2 class="section-title">Publicar Nueva Noticia o Producto</h2>
-        <div class="admin-panel">
-            <form id="newsForm">
-                <div class="form-group">
-                    <label for="newsTitle">Título de la Noticia / Producto:</label>
-                    <input type="text" id="newsTitle" class="form-control" placeholder="Ej. Nuevos precios de pollos o comunicado oficial" required>
-                </div>
-                <div class="form-group">
-                    <label for="newsImage">Imagen (Seleccionar archivo):</label>
-                    <input type="file" id="newsImage" class="form-control" accept="image/*" required>
-                </div>
-                <div class="form-group">
-                    <label for="newsDesc">Descripción o Información:</label>
-                    <textarea id="newsDesc" class="form-control" placeholder="Escribe los detalles para tus clientes..." required></textarea>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">Publicar Noticia</button>
-            </form>
-        </div>
+    <!-- ACTIVIDADES -->
+    <section id="actividades-section">
+        <h2 class="section-title">Actividades y Comunicados</h2>
+        <div id="actividades-grid" class="dynamic-grid"></div>
     </section>
 
-    <!-- CONTACTO / INSTAGRAM -->
-    <section id="contacto">
-        <div class="social-section">
-            <h2 class="section-title" style="margin-bottom: 20px;">Conéctate con Nosotros</h2>
-            <p style="margin-bottom: 20px; color: #555;">Sigue todas nuestras novedades, comunicados oficiales y actividades a través de nuestra cuenta oficial de Instagram.</p>
-            <a href="https://www.instagram.com/anaviprd" target="_blank" class="instagram-btn">
-                <i class="fab fa-instagram" style="font-size: 1.5rem;"></i> @anaviprd
-            </a>
+    <!-- CONGRESO -->
+    <section id="congreso-section">
+        <h2 class="section-title">Congreso</h2>
+        <div id="congreso-grid" class="dynamic-grid"></div>
+    </section>
+
+    <!-- INDICADORES ECONÓMICOS -->
+    <section id="indicadores-section">
+        <h2 class="section-title">Indicadores Económicos</h2>
+        <div id="indicadores-grid" class="dynamic-grid"></div>
+    </section>
+
+    <!-- PANEL DE ADMINISTRACIÓN GLOBAL -->
+    <div id="admin-panel-container">
+        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 25px;">Panel de Administración (Agregar Contenido)</h2>
+        
+        <form id="contentForm" style="margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 30px;">
+            <div class="form-group">
+                <label for="targetSection">Seleccionar Sección:</label>
+                <select id="targetSection" class="form-control" required>
+                    <option value="sector-avicola">Sector Avícola</option>
+                    <option value="pollo-huevo">Pollo y Huevo</option>
+                    <option value="actividades">Actividades</option>
+                    <option value="congreso">Congreso</option>
+                    <option value="indicadores">Indicadores Económicos</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="itemTitle">Título del Artículo / Producto:</label>
+                <input type="text" id="itemTitle" class="form-control" placeholder="Ej. Pollo Fresco Grado A" required>
+            </div>
+            <div class="form-group">
+                <label for="itemImage">Imagen:</label>
+                <input type="file" id="itemImage" class="form-control" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="itemDesc">Descripción:</label>
+                <textarea id="itemDesc" class="form-control" placeholder="Escribe los detalles..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Publicar Artículo en la Sección</button>
+        </form>
+
+        <h3 style="color: var(--primary-dark); margin-bottom: 15px;">Agregar Empresa Miembro</h3>
+        <form id="memberForm">
+            <div class="form-group">
+                <label for="memberName">Nombre de la Empresa:</label>
+                <input type="text" id="memberName" class="form-control" placeholder="Ej. Hacienda El Rodeo" required>
+            </div>
+            <div class="form-group">
+                <label for="memberLogo">Logo de la Empresa:</label>
+                <input type="file" id="memberLogo" class="form-control" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn-submit">Agregar Empresa Miembro</button>
+        </form>
+    </div>
+
+    <!-- SECCIÓN DE EMPRESAS MIEMBROS -->
+    <div id="empresas-miembros" class="members-section">
+        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 25px;">Empresas Miembros</h2>
+        <div class="members-carousel-wrapper">
+            <button class="carousel-btn" id="scrollLeft"><i class="fas fa-chevron-left"></i></button>
+            <div id="membersContainer" class="members-container">
+                <div class="empty-section-msg">No hay empresas miembros registradas todavía.</div>
+            </div>
+            <button class="carousel-btn" id="scrollRight"><i class="fas fa-chevron-right"></i></button>
         </div>
+    </div>
+
+    <!-- CONTACTO -->
+    <section id="contacto" style="text-align: center;">
+        <h2 class="section-title">Conéctate con Nosotros</h2>
+        <p style="margin-bottom: 20px; color: #555;">Sigue todas nuestras novedades, comunicados oficiales y actividades a través de nuestra cuenta oficial de Instagram.</p>
+        <a href="https://www.instagram.com/anaviprd" target="_blank" class="hero-btn" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #df5850 45%, #d6249f 60%, #285AEB 90%); color: white;">
+            <i class="fab fa-instagram"></i> @anaviprd
+        </a>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 ANAVIP RD - Asociación Nacional de Pequeños y Medianos Productores Avícolas Dominicana. Todos los derechos reservados.</p>
+        <p>&copy; 2026 ANAVIP RD - Desarrollado por LR_TZ Digital Studio. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- SCRIPT PARA GESTIONAR LAS NOTICIAS Y PRECÁRGAR LAS IMÁGENES -->
+    <!-- SCRIPT DE GESTIÓN Y SEGURIDAD -->
     <script>
-        // Imágenes iniciales oficiales proporcionadas por ti
-        const initialNews = [
-            {
-                id: 1,
-                title: "Bienvenidos a ANAVIP RD",
-                desc: "Trabajando por el fortalecimiento de los productores avícolas, la sostenibilidad del sector y el desarrollo de la avicultura dominicana.",
-                image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80", 
-                date: "28 de octubre de 2026"
-            },
-            {
-                id: 2,
-                title: "¿Quiénes Somos?",
-                desc: "Somos una asociación que agrupa a pequeños y medianos productores avícolas de la República Dominicana, promoviendo representación, capacitación y desarrollo sostenible.",
-                image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=800&q=80",
-                date: "28 de octubre de 2026"
-            },
-            {
-                id: 3,
-                title: "Nuestra Misión",
-                desc: "Representar, fortalecer y promover el desarrollo integral de los pequeños y medianos productores avícolas, impulsando la competitividad y la seguridad alimentaria.",
-                image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=800&q=80",
-                date: "28 de octubre de 2026"
-            },
-            {
-                id: 4,
-                title: "Nuestra Visión",
-                desc: "Ser la organización referente del sector avícola en la República Dominicana, reconocida por su liderazgo, unidad y contribución al desarrollo sostenible.",
-                image: "https://images.unsplash.com/photo-1527153857715-3908f2ae5e61?auto=format&fit=crop&w=800&q=80",
-                date: "28 de octubre de 2026"
-            },
-            {
-                id: 5,
-                title: "Nuestros Valores",
-                desc: "Unidad, compromiso, responsabilidad, innovación, desarrollo, sostenibilidad, bienestar animal y seguridad alimentaria.",
-                image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80",
-                date: "28 de octubre de 2026"
-            },
-            {
-                id: 6,
-                title: "El Sector Avícola Dominicano",
-                desc: "Un pilar fundamental para la economía del país, generando alimentos de calidad, empleos y desarrollo en las comunidades.",
-                image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80",
-                date: "28 de octubre de 2026"
-            }
-        ];
-
         document.addEventListener('DOMContentLoaded', () => {
-            const newsForm = document.getElementById('newsForm');
+            const adminLoginBtn = document.getElementById('adminLoginBtn');
+            const adminPanelContainer = document.getElementById('admin-panel-container');
+            const ADMIN_PASSWORD = 'admin123';
 
-            // Cargar noticias iniciales si el almacenamiento está vacío
-            if (!localStorage.getItem('anavip_news')) {
-                localStorage.setItem('anavip_news', JSON.stringify(initialNews));
+            if (sessionStorage.getItem('isAdmin') === 'true') {
+                enableAdminMode();
             }
 
-            loadNews();
+            adminLoginBtn.addEventListener('click', () => {
+                if (sessionStorage.getItem('isAdmin') === 'true') {
+                    if (confirm('¿Deseas cerrar la sesión de administrador?')) {
+                        sessionStorage.removeItem('isAdmin');
+                        location.reload();
+                    }
+                    return;
+                }
 
-            newsForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const title = document.getElementById('newsTitle').value;
-                const desc = document.getElementById('newsDesc').value;
-                const imageInput = document.getElementById('newsImage');
-                
-                const file = imageInput.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const imageData = event.target.result;
-                        const dateStr = new Date().toLocaleDateString('es-DO', { year: 'numeric', month: 'long', day: 'numeric' });
-
-                        const newsItem = {
-                            id: Date.now(),
-                            title,
-                            desc,
-                            image: imageData,
-                            date: dateStr
-                        };
-
-                        saveNewsItem(newsItem);
-                        newsForm.reset();
-                        loadNews();
-                        alert('¡Noticia o producto publicado con éxito!');
-                    };
-                    reader.readAsDataURL(file);
+                const password = prompt('Ingrese la contraseña de Administrador:');
+                if (password === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('isAdmin', 'true');
+                    enableAdminMode();
+                    alert('¡Acceso concedido! Ya puedes agregar o eliminar contenido en todas las secciones.');
+                } else if (password !== null) {
+                    alert('Contraseña incorrecta.');
                 }
             });
-        });
 
-        function getStoredNews() {
-            return JSON.parse(localStorage.getItem('anavip_news')) || [];
-        }
-
-        function saveNewsItem(item) {
-            const news = getStoredNews();
-            news.unshift(item); // Agrega la más nueva al principio
-            localStorage.setItem('anavip_news', JSON.stringify(news));
-        }
-
-        function deleteNews(id) {
-            if (confirm('¿Estás segura de que deseas eliminar esta publicación?')) {
-                let news = getStoredNews();
-                news = news.filter(item => item.id !== id);
-                localStorage.setItem('anavip_news', JSON.stringify(news));
-                loadNews();
-            }
-        }
-
-        function loadNews() {
-            const newsContainer = document.getElementById('newsContainer');
-            const news = getStoredNews();
-
-            if (news.length === 0) {
-                newsContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777; padding: 20px;">No hay noticias o productos publicados todavía. ¡Usa el panel de abajo para agregar el primero!</p>';
-                return;
+            function enableAdminMode() {
+                document.body.classList.add('admin-logged-in');
+                adminPanelContainer.style.display = 'block';
+                adminLoginBtn.innerHTML = '<i class="fas fa-unlock"></i> Cerrar Sesión Admin';
+                adminLoginBtn.style.backgroundColor = '#b30000';
             }
 
-            newsContainer.innerHTML = '';
-            news.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'news-card';
-                card.innerHTML = `
-                    <div class="news-img-container">
-                        <img src="${item.image}" alt="${item.title}">
-                    </div>
-                    <div class="news-content">
-                        <div class="news-date"><i class="far fa-calendar-alt"></i> ${item.date}</div>
-                        <h3 class="news-title">${item.title}</h3>
-                        <p class="news-desc">${item.desc}</p>
-                        <button class="delete-btn" onclick="deleteNews(${item.id})"><i class="fas fa-trash-alt"></i> Eliminar</button>
-                    </div>
-                `;
-                newsContainer.appendChild(card);
+            // --- GESTIÓN DE CONTENIDO DINÁMICO POR SECCIÓN ---
+            const contentForm = document.getElementById('contentForm');
+            loadAllContent();
+
+            contentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const sectionKey = document.getElementById('targetSection').value;
+                const title = document.getElementById('itemTitle').value;
+                const desc = document.getElementById('itemDesc').value;
+                const imageInput = document.getElementById('itemImage');
+
+                if (imageInput.files && imageInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newItem = {
+                            id: Date.now(),
+                            title: title,
+                            desc: desc,
+                            image: e.target.result
+                        };
+                        let items = JSON.parse(localStorage.getItem('anavip_' + sectionKey)) || [];
+                        items.unshift(newItem);
+                        localStorage.setItem('anavip_' + sectionKey, JSON.stringify(items));
+                        contentForm.reset();
+                        loadSectionContent(sectionKey);
+                    };
+                    reader.readAsDataURL(imageInput.files[0]);
+                }
             });
-        }
+
+            window.deleteItem = function(sectionKey, id) {
+                if (confirm('¿Estás seguro de eliminar este artículo?')) {
+                    let items = JSON.parse(localStorage.getItem('anavip_' + sectionKey)) || [];
+                    items = items.filter(item => item.id !== id);
+                    localStorage.setItem('anavip_' + sectionKey, JSON.stringify(items));
+                    loadSectionContent(sectionKey);
+                }
+            }
+
+            function loadSectionContent(sectionKey) {
+                const grid = document.getElementById(sectionKey + '-grid');
+                if (!grid) return;
+
+                const items = JSON.parse(localStorage.getItem('anavip_' + sectionKey)) || [];
+                grid.innerHTML = '';
+
+                if (items.length === 0) {
+                    grid.innerHTML = '<div class="empty-section-msg">No hay artículos publicados en esta sección todavía.</div>';
+                    return;
+                }
+
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'dynamic-card';
+                    card.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="dynamic-card-content">
+                            <h4>${item.title}</h4>
+                            <p>${item.desc}</p>
+                            <button class="delete-btn" onclick="deleteItem('${sectionKey}', ${item.id})"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            function loadAllContent() {
+                ['sector-avicola', 'pollo-huevo', 'actividades', 'congreso', 'indicadores'].forEach(sec => {
+                    loadSectionContent(sec);
+                });
+                loadMembers();
+            }
+
+            // --- GESTIÓN DE EMPRESAS MIEMBROS ---
+            const memberForm = document.getElementById('memberForm');
+            const membersContainer = document.getElementById('membersContainer');
+
+            memberForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('memberName').value;
+                const logoInput = document.getElementById('memberLogo');
+
+                if (logoInput.files && logoInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const newMember = {
+                            id: Date.now(),
+                            name: name,
+                            logo: e.target.result
+                        };
+                        let members = JSON.parse(localStorage.getItem('anavip_members')) || [];
+                        members.push(newMember);
+                        localStorage.setItem('anavip_members', JSON.stringify(members));
+                        memberForm.reset();
+                        loadMembers();
+                    };
+                    reader.readAsDataURL(logoInput.files[0]);
+                }
+            });
+
+            window.deleteMember = function(id) {
+                if (confirm('¿Estás seguro de eliminar esta empresa miembro?')) {
+                    let members = JSON.parse(localStorage.getItem('anavip_members')) || [];
+                    members = members.filter(member => member.id !== id);
+                    localStorage.setItem('anavip_members', JSON.stringify(members));
+                    loadMembers();
+                }
+            }
+
+            function loadMembers() {
+                const members = JSON.parse(localStorage.getItem('anavip_members')) || [];
+                membersContainer.innerHTML = '';
+                if (members.length === 0) {
+                    membersContainer.innerHTML = '<div class="empty-section-msg">No hay empresas miembros registradas todavía.</div>';
+                    return;
+                }
+                members.forEach(member => {
+                    const card = document.createElement('div');
+                    card.className = 'member-card';
+                    card.innerHTML = `
+                        <div class="member-logo-box"><img src="${member.logo}" alt="${member.name}"></div>
+                        <div class="member-name">${member.name}</div>
+                        <button class="delete-btn" onclick="deleteMember(${member.id})"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                    `;
+                    membersContainer.appendChild(card);
+                });
+            }
+
+            // --- CONTROLES DE DESPLAZAMIENTO CARRUSEL ---
+            const scrollLeftBtn = document.getElementById('scrollLeft');
+            const scrollRightBtn = document.getElementById('scrollRight');
+
+            if (scrollLeftBtn && scrollRightBtn) {
+                scrollLeftBtn.addEventListener('click', () => {
+                    membersContainer.scrollBy({ left: -250, behavior: 'smooth' });
+                });
+                scrollRightBtn.addEventListener('click', () => {
+                    membersContainer.scrollBy({ left: 250, behavior: 'smooth' });
+                });
+            }
+        });
     </script>
 </body>
 </html>
