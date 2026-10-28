@@ -82,6 +82,7 @@
         .social-icons {
             display: flex;
             gap: 18px;
+            align-items: center;
         }
 
         .social-icons a {
@@ -89,26 +90,57 @@
             font-size: 1.2rem;
             transition: color 0.3s;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .social-icons a:hover {
             color: var(--primary-dark);
         }
 
+        .social-icons a svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            transition: fill 0.3s;
+        }
+
+        .social-icons a:hover svg {
+            fill: var(--primary-dark);
+        }
+
+        /* --- BOTÓN FLOTANTE DE ADMINISTRADOR (MUÑEQUITO/ACCESO DISCRETO) --- */
         .admin-login-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
             background-color: var(--primary-dark);
             color: var(--white);
             border: none;
-            padding: 8px 14px;
-            border-radius: 5px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            opacity: 0.35;
+            transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
         }
 
         .admin-login-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
             background-color: var(--secondary-green);
+        }
+
+        body.admin-logged-in .admin-login-btn {
+            opacity: 0.9;
+            background-color: var(--alert-red);
         }
 
         /* Menú de Navegación */
@@ -527,6 +559,11 @@
 </head>
 <body>
 
+    <!-- BOTÓN FLOTANTE DISCRETO (MUÑEQUITO DE ADMINISTRADOR) -->
+    <button class="admin-login-btn" id="adminLoginBtn" title="Acceso Administrador">
+        <i class="fas fa-user-shield"></i>
+    </button>
+
     <!-- TOP BAR -->
     <header>
         <div class="top-bar">
@@ -542,11 +579,15 @@
                     <div class="social-icons">
                         <a href="https://www.instagram.com/anaviprd" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+                        
+                        <!-- Icono de X (Twitter) -->
+                        <a href="https://twitter.com/anaviprd" target="_blank" title="X (Twitter)">
+                            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+
                         <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
                         <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
-                    <button class="admin-login-btn" id="adminLoginBtn"><i class="fas fa-lock"></i> Acceso Administrador</button>
                 </div>
             </div>
         </div>
@@ -734,10 +775,12 @@
             const adminPanelContainer = document.getElementById('admin-panel-container');
             const ADMIN_PASSWORD = 'admin123';
 
+            // Comprobar si ya estaba logueado al recargar
             if (sessionStorage.getItem('isAdmin') === 'true') {
                 enableAdminMode();
             }
 
+            // Manejo del clic en el botón flotante de administrador
             adminLoginBtn.addEventListener('click', () => {
                 if (sessionStorage.getItem('isAdmin') === 'true') {
                     if (confirm('¿Deseas cerrar la sesión de administrador?')) {
@@ -759,40 +802,44 @@
 
             function enableAdminMode() {
                 document.body.classList.add('admin-logged-in');
-                adminPanelContainer.style.display = 'block';
-                adminLoginBtn.innerHTML = '<i class="fas fa-unlock"></i> Cerrar Sesión Admin';
-                adminLoginBtn.style.backgroundColor = '#b30000';
+                if (adminPanelContainer) {
+                    adminPanelContainer.style.display = 'block';
+                }
+                adminLoginBtn.innerHTML = '<i class="fas fa-unlock"></i>';
+                adminLoginBtn.title = 'Cerrar Sesión Admin';
             }
 
             // --- GESTIÓN DE CONTENIDO DINÁMICO POR SECCIÓN ---
             const contentForm = document.getElementById('contentForm');
             loadAllContent();
 
-            contentForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const sectionKey = document.getElementById('targetSection').value;
-                const title = document.getElementById('itemTitle').value;
-                const desc = document.getElementById('itemDesc').value;
-                const imageInput = document.getElementById('itemImage');
+            if (contentForm) {
+                contentForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const sectionKey = document.getElementById('targetSection').value;
+                    const title = document.getElementById('itemTitle').value;
+                    const desc = document.getElementById('itemDesc').value;
+                    const imageInput = document.getElementById('itemImage');
 
-                if (imageInput.files && imageInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const newItem = {
-                            id: Date.now(),
-                            title: title,
-                            desc: desc,
-                            image: e.target.result
+                    if (imageInput.files && imageInput.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const newItem = {
+                                id: Date.now(),
+                                title: title,
+                                desc: desc,
+                                image: e.target.result
+                            };
+                            let items = JSON.parse(localStorage.getItem('anavip_' + sectionKey)) || [];
+                            items.unshift(newItem);
+                            localStorage.setItem('anavip_' + sectionKey, JSON.stringify(items));
+                            contentForm.reset();
+                            loadSectionContent(sectionKey);
                         };
-                        let items = JSON.parse(localStorage.getItem('anavip_' + sectionKey)) || [];
-                        items.unshift(newItem);
-                        localStorage.setItem('anavip_' + sectionKey, JSON.stringify(items));
-                        contentForm.reset();
-                        loadSectionContent(sectionKey);
-                    };
-                    reader.readAsDataURL(imageInput.files[0]);
-                }
-            });
+                        reader.readAsDataURL(imageInput.files[0]);
+                    }
+                });
+            }
 
             window.deleteItem = function(sectionKey, id) {
                 if (confirm('¿Estás seguro de eliminar este artículo?')) {
@@ -841,28 +888,30 @@
             const memberForm = document.getElementById('memberForm');
             const membersContainer = document.getElementById('membersContainer');
 
-            memberForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('memberName').value;
-                const logoInput = document.getElementById('memberLogo');
+            if (memberForm) {
+                memberForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('memberName').value;
+                    const logoInput = document.getElementById('memberLogo');
 
-                if (logoInput.files && logoInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const newMember = {
-                            id: Date.now(),
-                            name: name,
-                            logo: e.target.result
+                    if (logoInput.files && logoInput.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const newMember = {
+                                id: Date.now(),
+                                name: name,
+                                logo: e.target.result
+                            };
+                            let members = JSON.parse(localStorage.getItem('anavip_members')) || [];
+                            members.push(newMember);
+                            localStorage.setItem('anavip_members', JSON.stringify(members));
+                            memberForm.reset();
+                            loadMembers();
                         };
-                        let members = JSON.parse(localStorage.getItem('anavip_members')) || [];
-                        members.push(newMember);
-                        localStorage.setItem('anavip_members', JSON.stringify(members));
-                        memberForm.reset();
-                        loadMembers();
-                    };
-                    reader.readAsDataURL(logoInput.files[0]);
-                }
-            });
+                        reader.readAsDataURL(logoInput.files[0]);
+                    }
+                });
+            }
 
             window.deleteMember = function(id) {
                 if (confirm('¿Estás seguro de eliminar esta empresa miembro?')) {
@@ -874,6 +923,7 @@
             }
 
             function loadMembers() {
+                if (!membersContainer) return;
                 const members = JSON.parse(localStorage.getItem('anavip_members')) || [];
                 membersContainer.innerHTML = '';
                 if (members.length === 0) {
@@ -896,7 +946,7 @@
             const scrollLeftBtn = document.getElementById('scrollLeft');
             const scrollRightBtn = document.getElementById('scrollRight');
 
-            if (scrollLeftBtn && scrollRightBtn) {
+            if (scrollLeftBtn && scrollRightBtn && membersContainer) {
                 scrollLeftBtn.addEventListener('click', () => {
                     membersContainer.scrollBy({ left: -250, behavior: 'smooth' });
                 });
