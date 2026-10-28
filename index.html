@@ -114,6 +114,9 @@
             text-decoration: none;
             font-weight: bold;
             transition: transform 0.3s, background-color 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
         }
 
         .btn:hover {
@@ -164,6 +167,120 @@
             color: var(--primary-green);
             margin-bottom: 15px;
             font-size: 1.4rem;
+        }
+
+        /* --- ESTILOS DEL CATÁLOGO DE NOTICIAS --- */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .news-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-img-container {
+            width: 100%;
+            height: 220px;
+            background-color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .news-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .news-title {
+            color: var(--primary-green);
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .news-desc {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .delete-btn {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            align-self: flex-start;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background-color: #c9302c;
+        }
+
+        /* --- PANEL PARA SUBIR NOTICIAS --- */
+        .admin-panel {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 120px;
         }
 
         /* Social / Contact Section */
@@ -238,7 +355,6 @@
     <header>
         <div class="navbar">
             <div class="logo-container">
-                <!-- Asegúrate de guardar la imagen de tu logo con el nombre 'logo.jpg' en la misma carpeta -->
                 <img src="logo.jpg" alt="Logo ANAVIP RD">
                 <div class="logo-text">ANAVIP RD <br><span style="font-size: 0.75rem; font-weight: normal;">República Dominicana</span></div>
             </div>
@@ -246,6 +362,8 @@
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#quienes-somos">Quiénes Somos</a></li>
                 <li><a href="#sector">Sector Avícola</a></li>
+                <li><a href="#noticias">Catálogo y Noticias</a></li>
+                <li><a href="#subir-noticia">Publicar</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </div>
@@ -254,7 +372,7 @@
     <!-- HERO SECTION -->
     <section id="inicio" class="hero" style="margin:0; max-width:none;">
         <h1>Unidos por el Desarrollo Sostenible de la Avicultura Dominicana</h1>
-        <p>Asociación Nacional de Pequeños y Medianos Productores Avícolas Dominicana</p>
+        <p>Asociación Nacional de Pequeños y Medianos Productores Avícolas, Dominicana. Unidos por el desarrollo sostenible de la avicultura dominicana.</p>
         <a href="#quienes-somos" class="btn">Conoce Más</a>
     </section>
 
@@ -264,7 +382,7 @@
         <div class="grid-2">
             <div class="card">
                 <h3>Nuestra Misión</h3>
-                <p>Agrupar, representar y defender los intereses de los pequeños y medianos productores avícolas de la República Dominicana, fomentando la competitividad, la innovación tecnológica y las buenas prácticas en pro de la seguridad alimentaria nacional.</p>
+                <p>Somos una asociación que agrupa a pequeños y medianos productores avícolas de la República Dominicana, con el objetivo de representar, apoyar y fomentar el desarrollo sostenible del sector avícola, contribuyendo a la seguridad alimentaria del país.</p>
             </div>
             <div class="card">
                 <h3>Desarrollo Sostenible</h3>
@@ -279,6 +397,36 @@
         <div class="card" style="text-align: center; max-width: 800px; margin: 0 auto;">
             <h3>Impulsando el Progreso Nacional</h3>
             <p>La avicultura representa uno de los pilares fundamentales de la alimentación y la economía dominicana. Desde ANAVIP RD impulsamos iniciativas técnicas, normativas y de capacitación constante para garantizar la máxima calidad en la producción de pollo y huevo fresco para las familias dominicanas.</p>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO DE NOTICIAS / PRODUCTOS -->
+    <section id="noticias">
+        <h2 class="section-title">Catálogo de Noticias y Productos</h2>
+        <div id="newsContainer" class="news-grid">
+            <!-- Las noticias y las imágenes oficiales se cargarán aquí -->
+        </div>
+    </section>
+
+    <!-- PANEL PARA SUBIR NOTICIAS -->
+    <section id="subir-noticia">
+        <h2 class="section-title">Publicar Nueva Noticia o Producto</h2>
+        <div class="admin-panel">
+            <form id="newsForm">
+                <div class="form-group">
+                    <label for="newsTitle">Título de la Noticia / Producto:</label>
+                    <input type="text" id="newsTitle" class="form-control" placeholder="Ej. Nuevos precios de pollos o comunicado oficial" required>
+                </div>
+                <div class="form-group">
+                    <label for="newsImage">Imagen (Seleccionar archivo):</label>
+                    <input type="file" id="newsImage" class="form-control" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="newsDesc">Descripción o Información:</label>
+                    <textarea id="newsDesc" class="form-control" placeholder="Escribe los detalles para tus clientes..." required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Publicar Noticia</button>
+            </form>
         </div>
     </section>
 
@@ -298,5 +446,142 @@
         <p>&copy; 2026 ANAVIP RD - Asociación Nacional de Pequeños y Medianos Productores Avícolas Dominicana. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- SCRIPT PARA GESTIONAR LAS NOTICIAS Y PRECÁRGAR LAS IMÁGENES -->
+    <script>
+        // Imágenes iniciales oficiales proporcionadas por ti
+        const initialNews = [
+            {
+                id: 1,
+                title: "Bienvenidos a ANAVIP RD",
+                desc: "Trabajando por el fortalecimiento de los productores avícolas, la sostenibilidad del sector y el desarrollo de la avicultura dominicana.",
+                image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80", 
+                date: "28 de octubre de 2026"
+            },
+            {
+                id: 2,
+                title: "¿Quiénes Somos?",
+                desc: "Somos una asociación que agrupa a pequeños y medianos productores avícolas de la República Dominicana, promoviendo representación, capacitación y desarrollo sostenible.",
+                image: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=800&q=80",
+                date: "28 de octubre de 2026"
+            },
+            {
+                id: 3,
+                title: "Nuestra Misión",
+                desc: "Representar, fortalecer y promover el desarrollo integral de los pequeños y medianos productores avícolas, impulsando la competitividad y la seguridad alimentaria.",
+                image: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=800&q=80",
+                date: "28 de octubre de 2026"
+            },
+            {
+                id: 4,
+                title: "Nuestra Visión",
+                desc: "Ser la organización referente del sector avícola en la República Dominicana, reconocida por su liderazgo, unidad y contribución al desarrollo sostenible.",
+                image: "https://images.unsplash.com/photo-1527153857715-3908f2ae5e61?auto=format&fit=crop&w=800&q=80",
+                date: "28 de octubre de 2026"
+            },
+            {
+                id: 5,
+                title: "Nuestros Valores",
+                desc: "Unidad, compromiso, responsabilidad, innovación, desarrollo, sostenibilidad, bienestar animal y seguridad alimentaria.",
+                image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80",
+                date: "28 de octubre de 2026"
+            },
+            {
+                id: 6,
+                title: "El Sector Avícola Dominicano",
+                desc: "Un pilar fundamental para la economía del país, generando alimentos de calidad, empleos y desarrollo en las comunidades.",
+                image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=800&q=80",
+                date: "28 de octubre de 2026"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const newsForm = document.getElementById('newsForm');
+
+            // Cargar noticias iniciales si el almacenamiento está vacío
+            if (!localStorage.getItem('anavip_news')) {
+                localStorage.setItem('anavip_news', JSON.stringify(initialNews));
+            }
+
+            loadNews();
+
+            newsForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const title = document.getElementById('newsTitle').value;
+                const desc = document.getElementById('newsDesc').value;
+                const imageInput = document.getElementById('newsImage');
+                
+                const file = imageInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        const dateStr = new Date().toLocaleDateString('es-DO', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                        const newsItem = {
+                            id: Date.now(),
+                            title,
+                            desc,
+                            image: imageData,
+                            date: dateStr
+                        };
+
+                        saveNewsItem(newsItem);
+                        newsForm.reset();
+                        loadNews();
+                        alert('¡Noticia o producto publicado con éxito!');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        function getStoredNews() {
+            return JSON.parse(localStorage.getItem('anavip_news')) || [];
+        }
+
+        function saveNewsItem(item) {
+            const news = getStoredNews();
+            news.unshift(item); // Agrega la más nueva al principio
+            localStorage.setItem('anavip_news', JSON.stringify(news));
+        }
+
+        function deleteNews(id) {
+            if (confirm('¿Estás segura de que deseas eliminar esta publicación?')) {
+                let news = getStoredNews();
+                news = news.filter(item => item.id !== id);
+                localStorage.setItem('anavip_news', JSON.stringify(news));
+                loadNews();
+            }
+        }
+
+        function loadNews() {
+            const newsContainer = document.getElementById('newsContainer');
+            const news = getStoredNews();
+
+            if (news.length === 0) {
+                newsContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: #777; padding: 20px;">No hay noticias o productos publicados todavía. ¡Usa el panel de abajo para agregar el primero!</p>';
+                return;
+            }
+
+            newsContainer.innerHTML = '';
+            news.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <div class="news-img-container">
+                        <img src="${item.image}" alt="${item.title}">
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date"><i class="far fa-calendar-alt"></i> ${item.date}</div>
+                        <h3 class="news-title">${item.title}</h3>
+                        <p class="news-desc">${item.desc}</p>
+                        <button class="delete-btn" onclick="deleteNews(${item.id})"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                    </div>
+                `;
+                newsContainer.appendChild(card);
+            });
+        }
+    </script>
 </body>
 </html>
